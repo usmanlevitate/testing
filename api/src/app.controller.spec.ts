@@ -22,4 +22,13 @@ describe('AppController', () => {
       expect(result.timestamp).toBeDefined();
     });
   });
+
+  describe('info', () => {
+    it('should return API metadata', () => {
+      const result = appController.getInfo();
+      expect(result.name).toBe('testing-api');
+      expect(result.version).toBe('1.1.0');
+      expect(result.endpoints).toContain('/info');
+    });
+  });
 });
