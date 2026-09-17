@@ -3,12 +3,10 @@ dist/
 .next/
 out/
 coverage/
-.env
-.env.local
 .env.*.local
 *.log
 .DS_Store
 .idea/
-.vscode/
 write_test
 .write_test
+config.bat
