@@ -11,9 +11,15 @@ export class AppService {
   }
 
   getHealth() {
+    const uptimeSeconds = Math.floor(process.uptime());
+
     return {
-      status: 'ok',
-      uptime: process.uptime(),
+      status: 'ok' as const,
+      uptimeSeconds,
+      uptimeHuman: formatUptime(uptimeSeconds),
+      node: process.version,
+      memoryMb: Math.round(process.memoryUsage().rss / 1024 / 1024),
+      checkedAt: new Date().toISOString(),
     };
   }
 
@@ -25,4 +31,11 @@ export class AppService {
       endpoints: ['/', '/health', '/info'],
     };
   }
+}
+
+function formatUptime(totalSeconds: number): string {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  return `${hours}h ${minutes}m ${seconds}s`;
 }
