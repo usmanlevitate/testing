@@ -15,6 +15,15 @@ type ApiInfo = {
   endpoints: string[];
 };
 
+type ApiHealth = {
+  status: "ok" | "degraded" | "down";
+  uptimeSeconds: number;
+  uptimeHuman: string;
+  node: string;
+  memoryMb: number;
+  checkedAt: string;
+};
+
 async function fetchJson<T>(path = ""): Promise<T | null> {
   try {
     const response = await fetch(`${API_URL}${path}`, {
@@ -32,9 +41,10 @@ async function fetchJson<T>(path = ""): Promise<T | null> {
 }
 
 export default async function Home() {
-  const [hello, info] = await Promise.all([
+  const [hello, info, health] = await Promise.all([
     fetchJson<ApiHello>(),
     fetchJson<ApiInfo>("/info"),
+    fetchJson<ApiHealth>("/health"),
   ]);
 
   return (
@@ -46,6 +56,43 @@ export default async function Home() {
           Simple full-stack starter: Nest API on port 3001, Next.js UI on port
           3000.
         </p>
+
+        <section className={styles.card}>
+          <div className={styles.cardHeader}>
+            <h2>Health status</h2>
+            <span
+              className={
+                health?.status === "ok" ? styles.badgeOk : styles.badgeDown
+              }
+            >
+              {health?.status === "ok" ? "Online" : "Offline"}
+            </span>
+          </div>
+          {health ? (
+            <ul className={styles.healthList}>
+              <li>
+                <span>Uptime</span>
+                <strong>{health.uptimeHuman}</strong>
+              </li>
+              <li>
+                <span>Node</span>
+                <strong>{health.node}</strong>
+              </li>
+              <li>
+                <span>Memory</span>
+                <strong>{health.memoryMb} MB</strong>
+              </li>
+              <li>
+                <span>Checked</span>
+                <strong>{new Date(health.checkedAt).toLocaleString()}</strong>
+              </li>
+            </ul>
+          ) : (
+            <p className={styles.error}>
+              Could not load <code>/health</code> from the Nest API.
+            </p>
+          )}
+        </section>
 
         <section className={styles.card}>
           <h2>API response</h2>
