@@ -1,0 +1,18 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "feature/api-info-endpoint",
+    "feature/health-status-ui",
+    "main"
+  ],
+  "parent": {
+    "feature/api-info-endpoint": "main",
+    "feature/health-status-ui": "main",
+    "main": null
+  },
+  "order": [
+    "main",
+    "feature/api-info-endpoint",
+    "feature/health-status-ui"
+  ]
+}

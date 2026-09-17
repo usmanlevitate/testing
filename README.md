@@ -39,3 +39,4 @@ Open [http://localhost:3000](http://localhost:3000). The page loads `GET /` from
 
 - `GET http://localhost:3001/` — hello payload
 - `GET http://localhost:3001/health` — health check
+- `GET http://localhost:3001/info` — API name, version, and endpoint list
