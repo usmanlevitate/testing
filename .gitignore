@@ -1,0 +1,15 @@
+node_modules/
+dist/
+.next/
+out/
+coverage/
+.env.*.local
+*.log
+.DS_Store
+.idea/
+write_test
+.write_test
+branch_structure.json
+temp_auto_push.bat
+temp_interactive_push.bat
+config.bat
