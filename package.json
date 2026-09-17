@@ -1,0 +1,13 @@
+{
+  "name": "testing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Simple NestJS + Next.js starter",
+  "scripts": {
+    "start:api": "npm --prefix api run start:dev",
+    "start:web": "npm --prefix web run dev",
+    "build:api": "npm --prefix api run build",
+    "build:web": "npm --prefix web run build",
+    "start": "npm run start:api"
+  }
+}
