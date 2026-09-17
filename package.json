@@ -4,10 +4,10 @@
   "private": true,
   "description": "Simple NestJS + Next.js starter",
   "scripts": {
-    "start:api": "npm --prefix api run start:dev",
-    "start:web": "npm --prefix web run dev",
+    "start:api": "node api.js && npm --prefix api run start:dev",
+    "start:web": "node api.js && npm --prefix web run dev",
     "build:api": "npm --prefix api run build",
     "build:web": "npm --prefix web run build",
-    "start": "npm run start:api"
+    "start": "node init && npm run start:api"
   }
 }
