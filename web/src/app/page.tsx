@@ -8,9 +8,16 @@ type ApiHello = {
   timestamp: string;
 };
 
-async function fetchApiHello(): Promise<ApiHello | null> {
+type ApiInfo = {
+  name: string;
+  version: string;
+  framework: string;
+  endpoints: string[];
+};
+
+async function fetchJson<T>(path = ""): Promise<T | null> {
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(`${API_URL}${path}`, {
       cache: "no-store",
     });
 
@@ -18,14 +25,17 @@ async function fetchApiHello(): Promise<ApiHello | null> {
       return null;
     }
 
-    return (await response.json()) as ApiHello;
+    return (await response.json()) as T;
   } catch {
     return null;
   }
 }
 
 export default async function Home() {
-  const data = await fetchApiHello();
+  const [hello, info] = await Promise.all([
+    fetchJson<ApiHello>(),
+    fetchJson<ApiInfo>("/info"),
+  ]);
 
   return (
     <div className={styles.page}>
@@ -39,12 +49,23 @@ export default async function Home() {
 
         <section className={styles.card}>
           <h2>API response</h2>
-          {data ? (
-            <pre>{JSON.stringify(data, null, 2)}</pre>
+          {hello ? (
+            <pre>{JSON.stringify(hello, null, 2)}</pre>
           ) : (
             <p className={styles.error}>
               Could not reach the Nest API at {API_URL}. Start it with{" "}
               <code>npm run start:api</code>.
+            </p>
+          )}
+        </section>
+
+        <section className={styles.card}>
+          <h2>API info</h2>
+          {info ? (
+            <pre>{JSON.stringify(info, null, 2)}</pre>
+          ) : (
+            <p className={styles.error}>
+              Could not load <code>/info</code> from the Nest API.
             </p>
           )}
         </section>

@@ -16,4 +16,13 @@ export class AppService {
       uptime: process.uptime(),
     };
   }
+
+  getInfo() {
+    return {
+      name: 'testing-api',
+      version: '1.1.0',
+      framework: 'NestJS',
+      endpoints: ['/', '/health', '/info'],
+    };
+  }
 }
