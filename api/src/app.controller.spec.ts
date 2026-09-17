@@ -31,4 +31,15 @@ describe('AppController', () => {
       expect(result.endpoints).toContain('/info');
     });
   });
+
+  describe('health', () => {
+    it('should return an ok health payload', () => {
+      const result = appController.getHealth();
+      expect(result.status).toBe('ok');
+      expect(result.uptimeSeconds).toBeGreaterThanOrEqual(0);
+      expect(result.uptimeHuman).toMatch(/\d+h \d+m \d+s/);
+      expect(result.node).toMatch(/^v\d+/);
+      expect(result.checkedAt).toBeDefined();
+    });
+  });
 });
